@@ -7,7 +7,7 @@ const cadastrarUsuario = async (req, res) => {
     if (!nome || !email || !senha) return res.status(400).json({mensagem: 'É obrigatório informar os campos nome, email e senha'});
 
     try {
-        const emailUnico = await knex('usuarios').where('email', '=', email);
+        const emailUnico = await knex('usuarios').where({email});
 
         if (emailUnico.length > 0) return res.status(400).json({mensagem: 'Endereço de e-mail já existe no sistema'});
 

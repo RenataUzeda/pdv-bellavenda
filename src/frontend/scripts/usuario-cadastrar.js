@@ -36,7 +36,7 @@ async function enviarDadosApi (novoUsuario) {
         alert('Usuário cadastrado com sucesso')
 
         limparFormulario();
-        window.location.href = '../../index.html';
+        window.location.href = '../index.html';
         
     } else {
         const erro = await resposta.json();

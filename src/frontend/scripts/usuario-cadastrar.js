@@ -20,24 +20,24 @@ function pegarDadosFormulario() {
     return novoUsuario;
 };
 
-async function enviarDadosApi (novoUsuario) {
+async function enviarDadosApi(novoUsuario) {
     const resposta = await fetch(
         'http://localhost:3000/usuario', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(novoUsuario)
-        }
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(novoUsuario)
+    }
     );
 
     if (resposta.status === 201) {
         alert('Usuário cadastrado com sucesso')
 
         limparFormulario();
-        window.location.href = '../../index.html';
-        
+        window.location.href = '../index.html';
+
     } else {
         const erro = await resposta.json();
         alert('Erro ao cadastrar: ' + erro.mensagem);
@@ -46,6 +46,6 @@ async function enviarDadosApi (novoUsuario) {
 
 function limparFormulario() {
     nome.value = '',
-    email.value = '',
-    senha.value = ''
+        email.value = '',
+        senha.value = ''
 };

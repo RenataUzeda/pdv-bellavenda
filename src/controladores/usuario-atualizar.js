@@ -1,6 +1,7 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
 
+
 const atualizarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body
 

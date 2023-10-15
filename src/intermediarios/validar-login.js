@@ -7,11 +7,10 @@ const validarLogin = async (req, res, next) => {
         const token = req.headers.authorization.split(' ')[1];
 
         const { id } = jwt.verify(token, process.env.JWT_PASS);
-        const usuarioEncontrado = await knex('usuarios').where({ id }).first()
 
-        if (!usuarioEncontrado) {
-            return res.status(404).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' })
-        }
+        const usuarioEncontrado = await knex('usuarios').where({ id }).first();
+
+        if (!usuarioEncontrado) return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' });
 
         const usuario = {
             id: usuarioEncontrado.id,
@@ -21,11 +20,12 @@ const validarLogin = async (req, res, next) => {
 
         req.usuario = usuario;
 
-        next()
+        next();
 
     } catch (error) {
-        console.log(error) // apagar na revisao
-        return res.status(401).json({ mensagem: 'Erro interno do servidor.' });
+        if (error.message === 'jwt expired') return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' });
+
+        return res.status(500).json({ mensagem: error.message });
     }
 }
 

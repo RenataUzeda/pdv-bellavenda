@@ -37,8 +37,6 @@ async function enviarDadosApi(novoUsuario) {
 
         limparFormulario();
         window.location.href = '../index.html';
-
-        
     } else {
         const erro = await resposta.json();
         alert('Erro ao cadastrar: ' + erro.mensagem);

@@ -1,15 +1,15 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
 const validarEmail = require('../utils/validar-email');
-
+const { verificaCampoNome, verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
 
 const atualizarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body
 
-    if (!nome || !email || !senha) {
-        return res.status(404).json({ mensagem: 'Os campos nome, email e senha são obrigatórios' })
-    }
     try {
+        await verificaCampoNome(nome);
+        await verificaCamposEmailSenha(email, senha);
+
         const usuarioId = req.usuario.id;
 
         const emailError = await validarEmail(req, email);
@@ -29,12 +29,9 @@ const atualizarUsuario = async (req, res) => {
             })
 
         return res.status(200).send({ message: "Usuário atualizado com sucesso" });
-
     } catch (error) {
-
-        return res.status(200).json({ mensagem: error.message })
+        return res.status(error.statusCode || 500).json({ mensagem: error.message })
     }
 }
-
 
 module.exports = atualizarUsuario;

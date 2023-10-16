@@ -19,12 +19,12 @@ const atualizarUsuario = async (req, res) => {
         await knex('usuarios')
             .where('id', usuarioId)
             .update({
-                nome: nome,
-                email: email,
+                nome,
+                email,
                 senha: senhaCriptografada
             });
 
-        return res.status(201).send({ message: "Usuário atualizado com sucesso" });
+        return res.status(201).send({ mensagem: "Usuário atualizado com sucesso" });
 
     } catch (error) {
 

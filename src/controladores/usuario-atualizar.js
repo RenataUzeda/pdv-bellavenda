@@ -12,7 +12,7 @@ const atualizarUsuario = async (req, res) => {
     try {
         const usuarioId = req.usuario.id;
 
-        const emailError = await validarEmail(req, email);
+        await validarEmail(req, email);
 
         if (emailError) {
             return res.status(400).json({ mensagem: emailError.message });

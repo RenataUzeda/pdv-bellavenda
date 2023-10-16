@@ -1,4 +1,4 @@
-main {
+/* main {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,4 +15,110 @@ header ul{
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Gabarito&family=Roboto:wght@300&display=swap');
+
+:root {
+    --first-color: #33869f;
+    --second-color: #FFFFFF;
+
+    --first-font: 'Roboto', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    background-color: var(--first-color);
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 30%;
+    padding: 20px;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-self: center;
+    list-style-type: none;
+    margin: 0%;
+    padding: 0%;
+}
+
+.header_li {
+    background-color: var(--first-color);
+    font-family: var(--first-font);
+    color: var(--second-color);
+    text-decoration: none;
+    padding: 20%;
+}
+
+main {
+    background-color: #FFF;
+    max-width: 50%;
+    padding: 7%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+h1 {
+    background-color: #FFF;
+    font-size: 2rem;
+    font-family: var(--first-font);
+}
+
+form {
+    background-color: #FFF;
+}
+
+label {
+    background-color: #FFF;
+    font-family: var(--first-font);
+}
+
+button {
+    display: block;
+    font-family: var(--first-font);
+    margin: 10px auto;
+    border-radius: 5px;
+    width: 250px;
+    height: 30px;
+    background-color: rgb(14, 0, 45);
+    color: #FFF;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+button:hover {
+    background-color: rgb(220, 220, 220);
+    color: rgb(14, 0, 45);
+}
+
+input {
+    display: block;
+    background-color: #FFF;
+    margin: 10px auto;
+    border-radius: 5px;
+    width: 250px;
+    height: 30px;
+}
+
+p {
+    background-color: #FFF;
+}
+
+a {
+    background-color: var(--second-color);
 }

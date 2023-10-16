@@ -1,13 +1,14 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
 
 const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
 
-    if (!email || !senha) return res.status(400).json({ mensagem: 'Os campos email e senha são obrigatórios' })
-
     try {
+        await verificaCamposEmailSenha(email, senha);
+
         const usuario = await knex('usuarios').where({ email }).first();
 
         if (!usuario) return res.status(401).json({ mensagem: 'Usuário e/ou senha inválido(s).' });
@@ -29,7 +30,7 @@ const loginUsuario = async (req, res) => {
             token,
         });
     } catch (error) {
-        return res.status(500).json({ mensagem: error.message });
+        return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 }
 

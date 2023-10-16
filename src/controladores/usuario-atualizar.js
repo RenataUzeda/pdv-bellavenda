@@ -1,18 +1,21 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
+const validarEmail = require('../utils/validar-email');
 
 const atualizarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body
 
     if (!nome || !email || !senha) {
-        return res.status(404).json({ mensagem: 'Os campos email e senha são obrigatórios' })
+        return res.status(404).json({ mensagem: 'Os campos nome, email e senha são obrigatórios' })
     }
     try {
         const usuarioId = req.usuario.id;
 
-        const emailUnico = await knex('usuarios').where({ email });
+        const emailError = await validarEmail(req, email);
 
-        if (emailUnico.length > 0) return res.status(400).json({ mensagem: 'Endereço de e-mail já existe no sistema' });
+        if (emailError) {
+            return res.status(400).json({ mensagem: emailError.message });
+        }
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 
@@ -22,15 +25,14 @@ const atualizarUsuario = async (req, res) => {
                 nome: nome,
                 email: email,
                 senha: senhaCriptografada
-            });
+            })
 
-        return res.status(201).send({ message: "Usuário atualizado com sucesso" });
+        return res.status(200).send({ message: "Usuário atualizado com sucesso" });
 
     } catch (error) {
 
-        return res.status(200).json(error.message)
+        return res.status(200).json({ mensagem: error.message })
     }
-
 }
 
 

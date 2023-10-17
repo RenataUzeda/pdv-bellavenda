@@ -1,7 +1,7 @@
-const knex = require('../conexao');
+const knex = require('../../conexao');
 const bcrypt = require('bcrypt');
-const validarEmail = require('../utils/validar-email');
-const { verificaCampoNome, verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
+const validarEmail = require('../../utils/validar-email');
+const { verificaCampoNome, verificaCamposEmailSenha } = require('../../utils/verificar-campos-vazios');
 
 const atualizarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body
@@ -25,7 +25,7 @@ const atualizarUsuario = async (req, res) => {
             });
 
         return res.status(200).send({ mensagem: "Usuário atualizado com sucesso" });
- 
+
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message })
     }

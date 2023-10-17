@@ -12,7 +12,7 @@ const atualizarUsuario = async (req, res) => {
 
         const usuarioId = req.usuario.id;
 
-        const emailError = await validarEmail(req, email);
+        await validarEmail(email);
 
         if (emailError) {
             return res.status(400).json({ mensagem: emailError.message });
@@ -23,12 +23,13 @@ const atualizarUsuario = async (req, res) => {
         await knex('usuarios')
             .where('id', usuarioId)
             .update({
-                nome: nome,
-                email: email,
+                nome,
+                email,
                 senha: senhaCriptografada
-            })
+            });
 
-        return res.status(200).send({ message: "Usuário atualizado com sucesso" });
+        return res.status(200).send({ mensagem: "Usuário atualizado com sucesso" });
+ 
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message })
     }

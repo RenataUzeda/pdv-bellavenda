@@ -1,6 +1,7 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
 const { verificaCampoNome, verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
+const validarEmail = require('../utils/validar-email');
 
 const cadastrarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body;
@@ -8,10 +9,7 @@ const cadastrarUsuario = async (req, res) => {
     try {
         await verificaCampoNome(nome);
         await verificaCamposEmailSenha(email, senha);
-
-        const emailUnico = await knex('usuarios').where({ email });
-
-        if (emailUnico.length > 0) return res.status(400).json({ mensagem: 'Endereço de e-mail já existe no sistema' });
+        await validarEmail(email);
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 

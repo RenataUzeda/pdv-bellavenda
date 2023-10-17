@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bellavenda PDV</title>
+    <link rel="stylesheet" href="./frontend/styles/style.css">
+
+</head>
+
+<body>
+    <header>
+        <ul>
+            <li><a class=" header_li" href="./frontend/usuario-detalhar.html">Home</a></li>
+            <li><a class="header_li" href="./frontend/listar-categoria.html">Categorias</a></li>
+        </ul>
+    </header>
+    <main>
+        <h1>Fazer login</h1>
+
+        <form method="POST">
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" placeholder="exemplo@email.com">
+            <label for="senha">Senha:</label>
+            <input type="password" id="senha" name="senha" placeholder="senha para acesso">
+            <button id="enviar">Entrar</button>
+        </form>
+
+        <p>Não tem uma conta? Clique <a href="./frontend/usuario-cadastrar.html">aqui</a></p>
+    </main>
+
+    <script src="./frontend/scripts/login/index.js"></script>
+</body>
+
+</html>

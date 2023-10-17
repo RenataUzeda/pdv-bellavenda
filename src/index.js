@@ -11,5 +11,5 @@ app.use(express.json());
 app.use(rotas);
 
 app.listen(process.env.PORT, () => {
-    console.log('Servidor online.')
+    console.log(`Servidor disponível na porta ${process.env.PORT}.`)
 });

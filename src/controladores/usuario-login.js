@@ -1,40 +1,37 @@
 const knex = require('../conexao');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
 
 const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
 
-    if (!email || !senha) {
-        return res.status(404).json({ mensagem: 'Os campos email e senha são obrigatórios' })
-    }
-
     try {
-        const usuario = await knex('usuarios').where({ email }).first()
+        await verificaCamposEmailSenha(email, senha);
 
-        if (!usuario) {
-            return res.status(404).json({ mensagem: 'Usuário e/ou senha inválido(s).' })
-        }
+        const usuario = await knex('usuarios').where({ email }).first();
 
-        const senhaCorreta = await bcrypt.compare(senha, usuario.senha)
+        if (!usuario) return res.status(401).json({ mensagem: 'Usuário e/ou senha inválido(s).' });
 
-        if (!senhaCorreta) {
-            return res.status(400).json({ mensagem: 'Usuário e/ou senha inválido(s).' })
-        }
+        const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
 
-        const token = jwt.sign({ id: usuario.id }, process.env.JWT_PASS, { expiresIn: '8h' })
+        if (!senhaCorreta) return res.status(401).json({ mensagem: 'Usuário e/ou senha inválido(s).' });
 
-        const { senha: _, ...dadosUsuario } = usuario
+        const token = jwt.sign({ id: usuario.id }, process.env.JWT_PASS, { expiresIn: '8h' });
+
+        const dadosUsuario = {
+            id: usuario.id,
+            nome: usuario.nome,
+            email: usuario.email,
+        };
 
         return res.status(200).json({
             usuario: dadosUsuario,
             token,
-        })
+        });
     } catch (error) {
-        console.log(error) //apagar na revisao 
-        return res.status(400).json(error.message)
+        return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 }
-
 
 module.exports = loginUsuario;

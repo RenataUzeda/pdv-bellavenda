@@ -12,7 +12,7 @@ const atualizarUsuario = async (req, res) => {
 
         const usuarioId = req.usuario.id;
 
-        await validarEmail(req, email);
+        await validarEmail(email);
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 
@@ -24,8 +24,8 @@ const atualizarUsuario = async (req, res) => {
                 senha: senhaCriptografada
             });
 
-        return res.status(201).send({ mensagem: "Usuário atualizado com sucesso" });
-
+        return res.status(200).send({ mensagem: "Usuário atualizado com sucesso" });
+ 
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message })
     }

@@ -5,6 +5,8 @@ const validarLogin = require('./intermediarios/validar-login');
 const detalharUsuario = require('./controladores/usuario/usuario-detalhar');
 const listarCategorias = require('./controladores/categoria/categoria-listar');
 const atualizarUsuario = require('./controladores/usuario/usuario-atualizar');
+const cadastrarProduto = require('./controladores/produto/produto-cadastro');
+const cadastrarCliente = require('./controladores/cliente/cliente-cadastro');
 
 const rotas = express();
 
@@ -17,5 +19,8 @@ rotas.use(validarLogin);
 
 rotas.get('/usuario', detalharUsuario);
 rotas.put('/usuario', atualizarUsuario);
+
+rotas.post('/produto', cadastrarProduto);
+rotas.post('/cliente', cadastrarCliente);
 
 module.exports = rotas;

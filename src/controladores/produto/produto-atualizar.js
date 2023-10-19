@@ -30,7 +30,7 @@ const atualizarDadosProduto = async (req, res) => {
   } catch (error) {
     if (error.code === "23505" && error.constraint === "unique_descricao") {
       return res.status(400).json({
-        mensagem: "Essa descrição já existe no cadastro de produtos.",
+        mensagem: "Essa descrição já existe no cadastro de produtos."
       });
     }
     return res

@@ -22,6 +22,9 @@ const cadastrarProduto = async (req, res) => {
 
         return res.status(201).json({ mensagem: 'Produto cadastrado com sucesso.' });
     } catch (error) {
+        if (error.code === "23505" && error.constraint === "unique_descricao") {
+            return res.status(400).json({ mensagem: 'Essa descrição já existe no cadastro de produtos.' });
+          }
         return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 }

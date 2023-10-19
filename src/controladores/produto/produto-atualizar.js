@@ -26,6 +26,7 @@ const atualizarDadosProduto = async (req, res) => {
 
         return res.status(200).send({ mensagem: "Produto atualizado com sucesso" });
     } catch (error) {
+        
         return res.status(error.statusCode || 500).json({ mensagem: error.message });
     };
 };

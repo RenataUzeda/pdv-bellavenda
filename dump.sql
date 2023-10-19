@@ -46,3 +46,5 @@ CREATE TABLE clientes (
     estado VARCHAR(2)
 );
 
+ALTER TABLE produtos
+ADD CONSTRAINT unique_descricao UNIQUE (descricao);

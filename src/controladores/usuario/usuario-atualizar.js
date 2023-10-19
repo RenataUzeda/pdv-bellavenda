@@ -12,7 +12,7 @@ const atualizarUsuario = async (req, res) => {
 
         const usuarioId = req.usuario.id;
 
-        await validarEmail(email, usuarioId);
+        await validarEmail(email, usuarioId, 'usuarios');
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 
@@ -28,7 +28,7 @@ const atualizarUsuario = async (req, res) => {
 
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message })
-    }
-}
+    };
+};
 
 module.exports = atualizarUsuario;

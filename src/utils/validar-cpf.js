@@ -1,17 +1,18 @@
 const knex = require('../conexao');
 
-async function validarCpf(cpf) {
+const validarCpf = async (cpf, id, tabela) => {
 
-    if (!cpf) {
-        throw { statusCode: 400, message: 'O campo CPF é obrigatório.' };
-    }
+    const cpfUnico = await knex(tabela).where({ cpf });
 
-    const cpfUnico = await knex('clientes').where({ cpf });
-
-    if (cpfUnico.length > 0) {
-        throw { statusCode: 400, message: 'O CPF já existe no sistema.' };
-    }
-}
-
+    if (id) {
+        if (cpfUnico.length > 0 && cpfUnico[0].id != id) {
+            throw { statusCode: 400, message: 'O CPF já existe no sistema.' };
+        }
+    } else {
+        if (cpfUnico.length > 0) {
+            throw { statusCode: 400, message: 'O CPF já existe no sistema.' };
+        }
+    };
+};
 
 module.exports = validarCpf;

@@ -3,7 +3,7 @@ const { verificaCampoNome } = require('../../utils/verificar-campos-vazios');
 const validarCpf = require('../../utils/validar-cpf');
 
 const cadastrarCliente = async (req, res) => {
-    const { nome, email, cpf } = req.body;
+    const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
     try {
         if (!email) {
@@ -22,8 +22,15 @@ const cadastrarCliente = async (req, res) => {
         const novoCliente = {
             nome,
             email,
-            cpf
+            cpf,
         }
+
+        if (cep) novoCliente.cep = cep;
+        if (rua) novoCliente.rua = rua;
+        if (numero) novoCliente.numero = numero;
+        if (bairro) novoCliente.bairro = bairro;
+        if (cidade) novoCliente.cidade = cidade;
+        if (estado) novoCliente.estado = estado;
 
         await knex('clientes').insert(novoCliente);
 

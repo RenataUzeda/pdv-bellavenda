@@ -23,7 +23,7 @@ const validarLogin = async (req, res, next) => {
         next();
 
     } catch (error) {
-        if (error.message === 'jwt expired') return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' });
+        if (error.message === 'jwt expired' || error.message === 'jwt must be provided') return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' });
 
         return res.status(500).json({ mensagem: error.message });
     }

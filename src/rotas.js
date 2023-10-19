@@ -7,6 +7,7 @@ const listarCategorias = require('./controladores/categoria/categoria-listar');
 const atualizarUsuario = require('./controladores/usuario/usuario-atualizar');
 const cadastrarProduto = require('./controladores/produto/produto-cadastro');
 const cadastrarCliente = require('./controladores/cliente/cliente-cadastro');
+const detalharProduto = require('./controladores/produto/produto-detalhar');
 
 const rotas = express();
 
@@ -21,6 +22,8 @@ rotas.get('/usuario', detalharUsuario);
 rotas.put('/usuario', atualizarUsuario);
 
 rotas.post('/produto', cadastrarProduto);
+rotas.get('/produto/:id', detalharProduto);
+
 rotas.post('/cliente', cadastrarCliente);
 
 module.exports = rotas;

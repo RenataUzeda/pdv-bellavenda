@@ -2,7 +2,7 @@ const knex = require('../../conexao');
 const validarCpf = require('../../utils/validar-cpf');
 const validarEmail = require('../../utils/validar-email');
 const validarId = require('../../utils/validar-id');
-const { verificaCampoNome, verificaCampoCPF, verificaCamposEmailSenha } = require("../../utils/verificar-campos-vazios");
+const { verificaCampoVazio } = require("../../utils/verificar-campos-vazios");
 
 const atualizarDadosCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
@@ -11,9 +11,7 @@ const atualizarDadosCliente = async (req, res) => {
     try {
         await validarId(id, 'clientes');
 
-        await verificaCampoNome(nome);
-        await verificaCampoCPF(cpf);
-        await verificaCamposEmailSenha(email);
+        await verificaCampoVazio({ nome, cpf, email });
 
         await validarEmail(email, id, 'clientes');
         await validarCpf(cpf, id, 'clientes');

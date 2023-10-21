@@ -1,17 +1,13 @@
 const knex = require('../../conexao');
-const { verificaCampoNome } = require('../../utils/verificar-campos-vazios');
+const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
 const validarCpf = require('../../utils/validar-cpf');
 
 const cadastrarCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
     try {
-        //chamar a função de verificar campo email
-        if (!email) {
-            return res.status(400).json({ mensagem: 'O campo email é obrigatório.' });
-        }
+        await verificaCampoVazio({ nome, email });
 
-        await verificaCampoNome(nome);
         await validarCpf(cpf);
         //chamar a função de validar email
         const emailUnicoCliente = await knex('clientes').where({ email });

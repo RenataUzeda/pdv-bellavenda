@@ -1,13 +1,12 @@
 const knex = require('../../conexao');
 const validarCategoria = require('../../utils/validar-categoria');
+const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
 
 const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
 
     try {
-        if (!descricao || !quantidade_estoque || !valor) {
-            return res.status(400).json({ mensagem: 'Todos os campos são obrigatórios.' });
-        }
+        await verificaCampoVazio({ descricao, quantidade_estoque, valor });
 
         await validarCategoria(categoria_id);
 
@@ -24,7 +23,7 @@ const cadastrarProduto = async (req, res) => {
     } catch (error) {
         if (error.code === "23505" && error.constraint === "unique_descricao") {
             return res.status(400).json({ mensagem: 'Essa descrição já existe no cadastro de produtos.' });
-          }
+        }
         return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 }

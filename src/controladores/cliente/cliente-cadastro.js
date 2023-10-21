@@ -6,13 +6,14 @@ const cadastrarCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
     try {
+        //chamar a função de verificar campo email
         if (!email) {
             return res.status(400).json({ mensagem: 'O campo email é obrigatório.' });
         }
 
         await verificaCampoNome(nome);
         await validarCpf(cpf);
-
+        //chamar a função de validar email
         const emailUnicoCliente = await knex('clientes').where({ email });
 
         if (emailUnicoCliente.length > 0) {

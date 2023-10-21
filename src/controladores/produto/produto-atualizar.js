@@ -1,21 +1,16 @@
 const knex = require("../../conexao");
 const validarCategoria = require("../../utils/validar-categoria");
 const validarId = require("../../utils/validar-id");
+const { verificaCampoVazio } = require("../../utils/verificar-campos-vazios");
 
 const atualizarDadosProduto = async (req, res) => {
   const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
   const { id } = req.params;
 
   try {
-    await validarId(id, 'produtos');
+    await verificaCampoVazio({ descricao, quantidade_estoque, valor, categoria_id });
 
-    if (!descricao || !quantidade_estoque || !valor || !categoria_id) {
-      throw {
-        statusCode: 400,
-        message:
-          'É obrigatório informar os campos descrição, quantidade_estoque, valor e categoria_id',
-      };
-    };
+    await validarId(id, "produtos");
 
     await validarCategoria(categoria_id);
 

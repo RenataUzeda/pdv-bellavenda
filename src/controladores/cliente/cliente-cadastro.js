@@ -1,26 +1,15 @@
 const knex = require('../../conexao');
 const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
 const validarCpf = require('../../utils/validar-cpf');
+const validarEmail = require('../../utils/validar-email');
 
 const cadastrarCliente = async (req, res) => {
     const { nome, email, cpf, cep, rua, numero, bairro, cidade, estado } = req.body;
 
     try {
-        await verificaCampoVazio({ nome, email });
-
-<<<<<<< HEAD
-        await verificaCampoNome(nome);
+        await verificaCampoVazio({ nome, email, cpf });
         await validarCpf(cpf, 'clientes');
-
-=======
-        await validarCpf(cpf);
-        //chamar a função de validar email
->>>>>>> revisao
-        const emailUnicoCliente = await knex('clientes').where({ email });
-
-        if (emailUnicoCliente.length > 0) {
-            return res.status(400).json({ mensagem: 'Endereço de e-mail já existe no sistema.' });
-        }
+        await validarEmail(email, 'clientes');
 
         const novoCliente = {
             nome,

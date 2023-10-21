@@ -1,6 +1,6 @@
 const knex = require('../conexao');
 
-const validarEmail = async (email, id, tabela) => {
+const validarEmail = async (email, tabela, id) => {
 
     const emailUnico = await knex(tabela).where({ email });
 

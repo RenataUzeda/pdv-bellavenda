@@ -11,7 +11,7 @@ const cadastrarCliente = async (req, res) => {
         }
 
         await verificaCampoNome(nome);
-        await validarCpf(cpf);
+        await validarCpf(cpf, 'clientes');
 
         const emailUnicoCliente = await knex('clientes').where({ email });
 

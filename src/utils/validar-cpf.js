@@ -1,6 +1,6 @@
 const knex = require('../conexao');
 
-const validarCpf = async (cpf, id, tabela) => {
+const validarCpf = async (cpf, tabela, id) => {
 
     const cpfUnico = await knex(tabela).where({ cpf });
 

@@ -15,19 +15,21 @@ const cadastrarCliente = async (req, res) => {
             nome,
             email,
             cpf,
+            cep,
+            rua,
+            numero,
+            bairro,
+            cidade,
+            estado
         }
-
-        if (cep) novoCliente.cep = cep;
-        if (rua) novoCliente.rua = rua;
-        if (numero) novoCliente.numero = numero;
-        if (bairro) novoCliente.bairro = bairro;
-        if (cidade) novoCliente.cidade = cidade;
-        if (estado) novoCliente.estado = estado;
 
         await knex('clientes').insert(novoCliente);
 
         return res.status(201).json({ mensagem: 'Cliente cadastrado com sucesso.' });
     } catch (error) {
+        if (error.message.includes("invalid input syntax for integer")) {
+            return res.status(400).json({ mensagem: "Certifique-se de fornecer números para os campos cep e numero." });
+        }
         return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 }

@@ -9,7 +9,7 @@ const cadastrarUsuario = async (req, res) => {
     try {
         await verificaCampoVazio({ nome, email, senha });
 
-        await validarEmail(email);
+        await validarEmail(email, 'usuarios');
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);
 

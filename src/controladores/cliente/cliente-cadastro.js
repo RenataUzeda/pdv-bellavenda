@@ -8,14 +8,8 @@ const cadastrarCliente = async (req, res) => {
     try {
         await verificaCampoVazio({ nome, email });
 
-<<<<<<< HEAD
-        await verificaCampoNome(nome);
-        await validarCpf(cpf, 'clientes');
-
-=======
         await validarCpf(cpf);
-        //chamar a função de validar email
->>>>>>> revisao
+
         const emailUnicoCliente = await knex('clientes').where({ email });
 
         if (emailUnicoCliente.length > 0) {

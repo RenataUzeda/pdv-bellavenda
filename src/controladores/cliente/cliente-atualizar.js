@@ -30,7 +30,7 @@ const atualizarDadosCliente = async (req, res) => {
                 estado
             });
 
-        return res.status(200).send({ mensagem: 'Cliente atualizado com sucesso' });
+        return res.status(200).json({ mensagem: 'Cliente atualizado com sucesso' });
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message });
     };

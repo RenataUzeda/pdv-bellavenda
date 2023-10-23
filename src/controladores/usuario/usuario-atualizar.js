@@ -23,7 +23,7 @@ const atualizarUsuario = async (req, res) => {
                 senha: senhaCriptografada
             });
 
-        return res.status(200).send({ mensagem: "Usuário atualizado com sucesso" });
+        return res.status(200).json({ mensagem: "Usuário atualizado com sucesso" });
 
     } catch (error) {
         return res.status(error.statusCode || 500).json({ mensagem: error.message })

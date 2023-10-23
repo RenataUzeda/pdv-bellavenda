@@ -21,7 +21,7 @@ const atualizarDadosProduto = async (req, res) => {
       categoria_id,
     });
 
-    return res.status(200).send({ mensagem: 'Produto atualizado com sucesso' });
+    return res.status(200).json({ mensagem: 'Produto atualizado com sucesso' });
   } catch (error) {
     if (error.code === "23505" && error.constraint === 'unique_descricao') {
       return res.status(400).json({

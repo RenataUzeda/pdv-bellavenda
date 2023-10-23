@@ -90,6 +90,10 @@ Por padrão, o projeto estará rodando no localhost e utilizando a porta `3000` 
 
 De forma alternativa, esta API está hospedada no seguinte link e pode ser acessada: [`PDV Bellavenda`](https://pdv-bellavenda.cyclic.app/).
 
+### Arquivo para testes de endpoints
+
+Caso utilize o Insomnia, você pode carregar o arquivo [`Insomnia.json`](./assets/Insomnia.json) diretamente em seu ambiente para acessar as requisições pré-configuradas. Utilize a variável `_.url_local` para testar o projeto no localhost ou a variável `_.url_deploy` para testar os endpoints via deploy da API.
+
 ### Endpoints e exemplos de requisição
 
 <details>

@@ -1,10 +1,19 @@
 const express = require('express');
-const cadastrarUsuario = require('./controladores/usuario-cadastro');
-const loginUsuario = require('./controladores/usuario-login');
+const cadastrarUsuario = require('./controladores/usuario/usuario-cadastro');
+const loginUsuario = require('./controladores/usuario/usuario-login');
 const validarLogin = require('./intermediarios/validar-login');
-const detalharUsuario = require('./controladores/usuario-detalhar');
-const listarCategorias = require('./controladores/categoria-listar');
-const atualizarUsuario = require('./controladores/usuario-atualizar');
+const detalharUsuario = require('./controladores/usuario/usuario-detalhar');
+const listarCategorias = require('./controladores/categoria/categoria-listar');
+const atualizarUsuario = require('./controladores/usuario/usuario-atualizar');
+const cadastrarProduto = require('./controladores/produto/produto-cadastro');
+const cadastrarCliente = require('./controladores/cliente/cliente-cadastro');
+const detalharProduto = require('./controladores/produto/produto-detalhar');
+const listarProdutos = require('./controladores/produto/produto-listar');
+const atualizarDadosProduto = require('./controladores/produto/produto-atualizar');
+const atualizarDadosCliente = require('./controladores/cliente/cliente-atualizar');
+const detalharCliente = require('./controladores/cliente/cliente-detalhar');
+const listarClientes = require('./controladores/cliente/cliente-listar');
+const excluirProduto = require('./controladores/produto/produto-excluir');
 
 const rotas = express();
 
@@ -16,6 +25,18 @@ rotas.post('/login', loginUsuario);
 rotas.use(validarLogin);
 
 rotas.get('/usuario', detalharUsuario);
-rotas.put('/usuario',atualizarUsuario);
+rotas.put('/usuario', atualizarUsuario);
+
+rotas.post('/produto', cadastrarProduto);
+rotas.get('/produto/:id', detalharProduto);
+rotas.delete('/produto/:id',excluirProduto)
+
+rotas.post('/cliente', cadastrarCliente);
+rotas.get('/cliente/:id', detalharCliente);
+rotas.get('/cliente',listarClientes);
+
+rotas.get('/produto', listarProdutos);
+rotas.put('/produto/:id', atualizarDadosProduto);
+rotas.put('/cliente/:id', atualizarDadosCliente);
 
 module.exports = rotas;

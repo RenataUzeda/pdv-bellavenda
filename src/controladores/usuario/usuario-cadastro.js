@@ -1,14 +1,14 @@
-const knex = require('../conexao');
+const knex = require('../../conexao');
 const bcrypt = require('bcrypt');
-const { verificaCampoNome, verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
-const validarEmail = require('../utils/validar-email');
+const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
+const validarEmail = require('../../utils/validar-email');
 
 const cadastrarUsuario = async (req, res) => {
     const { nome, email, senha } = req.body;
 
     try {
-        await verificaCampoNome(nome);
-        await verificaCamposEmailSenha(email, senha);
+        await verificaCampoVazio({ nome, email, senha });
+
         await validarEmail(email);
 
         const senhaCriptografada = await bcrypt.hash(senha, 10);

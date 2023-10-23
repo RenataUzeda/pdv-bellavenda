@@ -1,13 +1,13 @@
-const knex = require('../conexao');
+const knex = require('../../conexao');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { verificaCamposEmailSenha } = require('../utils/verificar-campos-vazios');
+const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
 
 const loginUsuario = async (req, res) => {
     const { email, senha } = req.body
 
     try {
-        await verificaCamposEmailSenha(email, senha);
+        await verificaCampoVazio({ email, senha });
 
         const usuario = await knex('usuarios').where({ email }).first();
 

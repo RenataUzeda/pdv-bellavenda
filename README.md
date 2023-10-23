@@ -13,11 +13,19 @@ Este projeto é uma API desenvolvida na arquitetura REST, para um sistema PDV (f
 ## Funcionalidades
 
 - Listar categorias
-
 - Cadastrar Usuário
 - Fazer Login
 - Detalhar Perfil do Usuário Logado
 - Editar Perfil do Usuário Logado
+- Cadastrar Produto
+- Editar Dados do Produto
+- Listar Produtos
+- Detalhar Produto
+- Excluir Produto por ID
+- Cadastrar Cliente
+- Editar Dados do Cliente
+- Listar Clientes
+- Detalhar Cliente
 
 ## Pré-requisitos
 
@@ -82,83 +90,293 @@ Por padrão, o projeto estará rodando no localhost e utilizando a porta `3000` 
 
 De forma alternativa, esta API está hospedada no seguinte link e pode ser acessada: [`PDV Bellavenda`](https://pdv-bellavenda.cyclic.app/).
 
+### Arquivo para testes de endpoints
+
+Caso utilize o Insomnia, você pode carregar o arquivo [`Insomnia.json`](./assets/Insomnia.json) diretamente em seu ambiente para acessar as requisições pré-configuradas. Utilize a variável `_.url_local` para testar o projeto no localhost ou a variável `_.url_deploy` para testar os endpoints via deploy da API.
+
 ### Endpoints e exemplos de requisição
 
-- **Listar Categorias**
+<details>
+<summary>Listar Categorias</summary>
 
-  `GET` `/categoria`
+`GET` `/categoria`
 
-  Essa rota lista todas as categorias cadastradas na API, não é necessário estar logado para acessar.
+Essa rota lista todas as categorias cadastradas na API, não é necessário estar logado para acessar.
 
-  Exemplo de requisição
+Exemplo de requisição
 
-  ```
-  // GET /categoria
-  // Sem conteúdo no corpo (body) da requisição
-  ```
+```
+// GET /categoria
+// Sem conteúdo no corpo (body) da requisição
+```
 
-- **Cadastrar Usuário**
+</details>
 
-  `POST` `/usuario`
+<details>
+<summary>Cadastrar Usuário</summary>
 
-  Permite que o usuário cadastre-se na aplicação.
+`POST` `/usuario`
 
-  Exemplo de requisição
+Permite que o usuário cadastre-se na aplicação.
 
-  ```
-  // POST /usuario
-  {
-      "nome": "Bellatrix",
-      "email": "bellatrix@email.com",
-      "senha": "123"
-  }
-  ```
+Exemplo de requisição
 
-- **Login do Usuário**
+```
+// POST /usuario
+{
+    "nome": "Bellatrix",
+    "email": "bellatrix@email.com",
+    "senha": "123"
+}
+```
 
-  `POST` `/login`
+</details>
 
-  Permite o usuario cadastrado realizar seu login no sistema.
+<details>
+<summary>Login do Usuário</summary>
 
-  Exemplo de requisição
+`POST` `/login`
 
-  ```
-  // POST /login
-  {
-      "email": "bellatrix@email.com",
-      "senha": "123"
-  }
-  ```
+Permite o usuario cadastrado realizar seu login no sistema.
 
-- **Detalhar Usuário**
+Exemplo de requisição
 
-  `GET` `/usuario`
+```
+// POST /login
+{
+    "email": "bellatrix@email.com",
+    "senha": "123"
+}
+```
 
-  Essa rota detalha os dados do perfil do usuário que estiver logado (exceto a senha). Esta rota só é acessível mediante login.
+</details>
 
-  Exemplo de requisição
+##### 👉 Para acessar os endpoints abaixo é necessário estar logado
 
-  ```
-  // GET /usuario
-  // Sem conteúdo no corpo (body) da requisição
-  ```
+<details>
+<summary>Detalhar Usuário</summary>
 
-- **Atualizar Usuário**
+`GET` `/usuario`
 
-  `PUT` `/usuario`
+Essa rota detalha os dados do perfil do usuário que estiver logado (exceto a senha). Esta rota só é acessível mediante login.
 
-  Essa rota identifica o ID do usuário logado através do token de autenticação e realiza alterações nos dados deste usuário.
+Exemplo de requisição
 
-  Exemplo de requisição
+```
+// GET /usuario
+// Sem conteúdo no corpo (body) da requisição
+```
 
-  ```
-  // PUT /usuario
-  {
-      "nome": "Bellavenda",
-      "email": "bellavenda@email.com",
-      "senha": "321"
-  }
-  ```
+</details>
+
+<details>
+<summary>Atualizar Usuário</summary>
+
+`PUT` `/usuario`
+
+Essa rota identifica o ID do usuário logado através do token de autenticação e realiza alterações nos dados deste usuário.
+
+Exemplo de requisição
+
+```
+// PUT /usuario
+{
+    "nome": "Bellavenda",
+    "email": "bellavenda@email.com",
+    "senha": "321"
+}
+```
+
+</details>
+
+<details>
+<summary>Cadastrar Produto</summary>
+
+`POST` `/produto`
+
+Essa rota permite que o usuário logado faça o cadastro de um novo produto no sistema.
+
+Exemplo de requisição
+
+```
+// POST /produto
+{
+    "descricao": "Leite integral em caixa",
+    "quantidade_estoque": 42,
+    "valor": 548,
+    "categoria_id": 4
+}
+```
+
+</details>
+
+<details>
+<summary>Editar Produto</summary>
+
+`PUT` `/produto/:id`
+
+Essa rota permite que o usuário logado faça alterações em um produto existente no sistema.
+
+Exemplo de requisição
+
+```
+// PUT /produto/1
+{
+    "descricao": "Leite integral em caixa",
+    "quantidade_estoque": 42,
+    "valor": 548,
+    "categoria_id": 4
+}
+```
+
+</details>
+
+<details>
+<summary>Listar Produtos</summary>
+
+`GET` `/produto`
+
+Essa rota lista todos os produtos cadastrados na API. Caso seja informado o parâmetro de requisição (qery params) `categoria_id`, a resposta será uma lista com filtro de produtos que possuem aquela categoria.
+
+Exemplo de requisição
+
+```
+// GET /produto
+// Sem conteúdo no corpo (body) da requisição
+
+// GET /produto?categoria_id=4
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
+
+<details>
+<summary>Detalhar Produto</summary>
+
+`GET` `/produto/:id`
+
+Essa rota detalha os dados do produto cadastrado no sistema que corresponda ao id informado.
+
+Exemplo de requisição
+
+```
+// GET /produto/1
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
+
+<details>
+<summary>Excluir Produto por ID</summary>
+
+`DELETE` `/produto/:id`
+
+Essa rota faz a exclusão no banco de dados do produto que corresponde ao id informado na rota.
+
+Exemplo de requisição
+
+```
+// DELETE /produto/1
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
+
+<details>
+<summary>Cadastrar Cliente</summary>
+
+`POST` `/cliente`
+
+Permite que o usuário logado no sistema cadastre um novo cliente no banco de dados.
+
+Exemplo de requisição
+
+```
+// POST /cliente
+
+// campos obrigatórios
+{
+    "nome": "Bellatrix",
+    "email": "bellatrix@email.com",
+    "cpf": "123"
+}
+
+// campos opcionais
+{
+    "cep" : "00000000",
+    "rua" : "X",
+    "numero" : 12,
+    "bairro" : "Y",
+    "cidade" : "Z",
+    "estado" : "UF"
+}
+```
+
+</details>
+
+<details>
+<summary>Editar Dados do Cliente</summary>
+
+`PUT` `/cliente/:id`
+
+Permite que o usuário logado no sistema edite dados de um cliente existente no banco de dados.
+
+Exemplo de requisição
+
+```
+// PUT /cliente/1
+
+// campos obrigatórios
+{
+    "nome": "Bellatrix",
+    "email": "bellatrix@email.com",
+    "cpf": "123"
+}
+
+// campos opcionais
+{
+    "cep" : "00000000",
+    "rua" : "X",
+    "numero" : 12,
+    "bairro" : "Y",
+    "cidade" : "Z",
+    "estado" : "UF"
+}
+```
+
+</details>
+
+<details>
+<summary>Listar Clientes</summary>
+
+`GET` `/cliente`
+
+Essa rota lista todos os clientes cadastrados na API.
+
+Exemplo de requisição
+
+```
+// GET /produto
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
+
+<details>
+<summary>Detalhar Cliente</summary>
+
+`GET` `/cliente/:id`
+
+Essa rota detalha os dados do cliente cadastrado no sistema que corresponda ao id informado.
+
+Exemplo de requisição
+
+```
+// GET /cliente/1
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
 
 ## Em desenvolvimento
 

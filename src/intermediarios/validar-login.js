@@ -3,8 +3,16 @@ const knex = require('../conexao.js');
 const jwt = require('jsonwebtoken');
 
 const validarLogin = async (req, res, next) => {
+    const { authorization } = req.headers;
+
+    if (!authorization) {
+        return res.status(401).json({ mensagem: 'Para acessar este recurso um token de autenticação válido deve ser enviado.' });
+    }
+
+    const token = authorization.split(' ')[1];
+
     try {
-        const token = req.headers.authorization.split(' ')[1];
+        //const token = req.headers.authorization.split(' ')[1];
 
         const { id } = jwt.verify(token, process.env.JWT_PASS);
 

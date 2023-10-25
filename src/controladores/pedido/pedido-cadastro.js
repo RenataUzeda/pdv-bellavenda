@@ -1,6 +1,7 @@
 const knex = require('../../conexao');
 const { verificaCampoVazio } = require('../../utils/verificar-campos-vazios');
 const calcularValorTotal = require('../../utils/calcular-valor-total');
+const transportador = require('../../utils/nodemailer');
 
 const cadastrarPedido = async (req, res) => {
     const { cliente_id, observacao, pedido_produtos } = req.body;
@@ -56,6 +57,15 @@ const cadastrarPedido = async (req, res) => {
 
             await knex('pedido_produtos').insert(novoProdutoPedido);
         }
+
+        const { email, nome } = clienteExistente[0];
+
+        transportador.sendMail({
+            from: process.env.EMAIL_FROM,
+            to: email,
+            subject: 'Confirmação de Pedido',
+            text: ` Olá ${nome}, seu pedido foi efetuado com sucesso! `
+        });
 
         return res.status(201).json({ message: 'Pedido cadastrado com sucesso' });
     } catch (error) {

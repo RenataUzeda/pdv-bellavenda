@@ -1,6 +1,6 @@
 const aws = require('aws-sdk');
 
-const endpoint = new aws.Endpoint(process.env.ENDPOINT_S3)
+const endpoint = new aws.Endpoint(process.env.ENDPOINT_BLACKBLAZE)
 
 const s3 = new aws.S3({
     endpoint,
@@ -12,7 +12,7 @@ const s3 = new aws.S3({
 
 const uploadImagem = async (path, buffer, mimetype) => {
     const imagem = await s3.upload({
-            Bucket: process.env.BLACKBLAZE_BUCKET,
+            Bucket: process.env.BUCKET_NAME,
             Key: path,
             Body: buffer,
             ContentType: mimetype
@@ -21,9 +21,11 @@ const uploadImagem = async (path, buffer, mimetype) => {
 
     return {
         path: imagem.Key,
-        url: `https://${process.env.BLACKBLAZE_BUCKET}.${process.env.ENDPOINT_S3}/${imagem.Key}`
+        url: `https://${process.env.BUCKET_NAME}.${process.env.ENDPOINT_BLACKBLAZE}/${imagem.Key}`
     }
 
 }
 
-module.exports = uploadImagem
+module.exports = {
+    uploadImagem
+}

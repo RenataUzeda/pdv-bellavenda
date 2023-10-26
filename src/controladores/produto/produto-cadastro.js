@@ -30,9 +30,9 @@ const cadastrarProduto = async (req, res) => {
 
         const [produtoComFoto] = await knex('produtos').update({
             produto_imagem: imagem.path
-        }).where({ id }).returning('*')
+        }).where({ id }).returning(['descricao', 'quantidade_estoque', 'valor', 'categoria_id', 'produto_imagem'])
 
-        produtoComFoto.urlImagem = imagem.url
+        produtoComFoto.produto_imagem = imagem.url
 
         return res.status(201).json(produtoComFoto);
     } catch (error) {

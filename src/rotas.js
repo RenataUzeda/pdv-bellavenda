@@ -16,6 +16,10 @@ const listarClientes = require('./controladores/cliente/cliente-listar');
 const excluirProduto = require('./controladores/produto/produto-excluir');
 const cadastrarPedido = require('./controladores/pedido/pedido-cadastro');
 const listarPedidos = require('./controladores/pedido/pedido-listar');
+const multer = require('./multer');
+const imagemProduto = require('./controladores/produto/produto-imagem');
+
+
 
 const rotas = express();
 
@@ -31,7 +35,8 @@ rotas.put('/usuario', atualizarUsuario);
 
 rotas.post('/produto', cadastrarProduto);
 rotas.get('/produto/:id', detalharProduto);
-rotas.delete('/produto/:id', excluirProduto)
+rotas.delete('/produto/:id', excluirProduto);
+rotas.post('/produto-imagem', multer.single('arquivo'), imagemProduto);
 
 rotas.post('/cliente', cadastrarCliente);
 rotas.get('/cliente/:id', detalharCliente);

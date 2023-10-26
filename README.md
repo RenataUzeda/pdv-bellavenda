@@ -1,6 +1,6 @@
 # Desafio Final - Backend
 
-![Static Badge](https://img.shields.io/badge/STATUS-Em%20Desenvolvimento-blue)
+![Static Badge](https://img.shields.io/badge/STATUS-API%20Completa-green)
 
 ## Pré-visualização
 
@@ -26,6 +26,8 @@ Este projeto é uma API desenvolvida na arquitetura REST, para um sistema PDV (f
 - Editar Dados do Cliente
 - Listar Clientes
 - Detalhar Cliente
+- Cadastrar Pedido
+- Listar Pedidos
 
 ## Pré-requisitos
 
@@ -65,11 +67,27 @@ Para configurar o projeto em ambiente local, siga estas etapas:
    ```
     PORT=
 
+    JWT_PASS=
+
     DB_HOST=
     DB_PORT=
     DB_USER=
     DB_PASS=
     DB_NAME=
+
+    EMAIL_HOST=
+    EMAIL_PORT=
+    EMAIL_USER=
+    EMAIL_PASS=
+    EMAIL_FROM=
+
+    KEY_ID=
+    KEY_NAME=
+    KEY_APP=
+
+    ENDPOINT_S3=
+    BLACKBLAZE_BUCKET=
+
    ```
 
 6. Inicie o servidor:
@@ -206,6 +224,19 @@ Exemplo de requisição
     "valor": 548,
     "categoria_id": 4
 }
+
+// opcionalmente, cadastre uma imagem para o produto
+// utilizando o formato Multipart Form, siga o modelo:
+
+    | Variável           | Tipo do Campo |
+    |--------------------|---------------|
+    | descricao          | Texto/Valor   |
+    | quantidade_estoque | Texto/Valor   |
+    | valor              | Texto/Valor   |
+    | categoria_id       | Texto/Valor   |
+    | imagem             | File          |
+
+
 ```
 
 </details>
@@ -227,6 +258,17 @@ Exemplo de requisição
     "valor": 548,
     "categoria_id": 4
 }
+
+// opcionalmente, cadastre uma imagem para o produto
+// utilizando o formato Multipart Form, siga o modelo:
+
+    | Variável           | Tipo do Campo |
+    |--------------------|---------------|
+    | descricao          | Texto/Valor   |
+    | quantidade_estoque | Texto/Valor   |
+    | valor              | Texto/Valor   |
+    | categoria_id       | Texto/Valor   |
+    | imagem             | File          |
 ```
 
 </details>
@@ -356,7 +398,7 @@ Essa rota lista todos os clientes cadastrados na API.
 Exemplo de requisição
 
 ```
-// GET /produto
+// GET /cliente
 // Sem conteúdo no corpo (body) da requisição
 ```
 
@@ -378,9 +420,50 @@ Exemplo de requisição
 
 </details>
 
-## Em desenvolvimento
+<details>
+<summary>Cadastrar Pedido</summary>
 
-Ressaltamos que esta API está em fase de desenvolvimento, e receberá novas funcionalidades nas próximas semanas.
+`PUT` `/pedido`
+
+Permite que o usuário logado no sistema cadastre um novo pedido no banco de dados.
+
+Exemplo de requisição
+
+```
+// PUT /pedido
+{
+    "cliente_id": 1,
+    "observacao": "Em caso de ausência recomendo deixar com algum vizinho",
+    "pedido_produtos": [
+        {
+            "produto_id": 1,
+            "quantidade_produto": 10
+        },
+        {
+            "produto_id": 2,
+            "quantidade_produto": 20
+        }
+    ]
+}
+```
+
+</details>
+
+<details>
+<summary>Listar Pedidos</summary>
+
+`GET` `/pedido`
+
+Essa rota lista todos os pedidos cadastrados na API.
+
+Exemplo de requisição
+
+```
+// GET /pedido
+// Sem conteúdo no corpo (body) da requisição
+```
+
+</details>
 
 ## Contribuidoras
 

@@ -11,26 +11,20 @@ const s3 = new aws.S3({
 });
 
 const uploadImagem = async (path, buffer, mimetype) => {
-    try {
-        const arquivo = await s3.upload({
-            Bucket: process.env.BLACKBLAZE_BUCKET,
-            Key: path,
-            Body: buffer,
-            ContentType: mimetype
-        }).promise()
+    const imagem = await s3.upload({
+        Bucket: process.env.BLACKBLAZE_BUCKET,
+        Key: path,
+        Body: buffer,
+        ContentType: mimetype
+    }).promise()
 
-        return {
-            path: arquivo.Key,
-            url: `https://${process.env.BLACKBLAZE_BUCKET}.${process.env.ENDPOINT_S3}/${arquivo.Key}`
-        }
-    } catch (error) {
-        console.log(error)
-        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    return {
+        path: imagem.Key,
+        url: `https://${process.env.BLACKBLAZE_BUCKET}.${process.env.ENDPOINT_S3}/${imagem.Key}`
     }
 
-};
+}
 
-
-
-
-module.exports = uploadImagem
+module.exports = {
+    uploadImagem
+}

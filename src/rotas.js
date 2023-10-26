@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('./multer');
 const cadastrarUsuario = require('./controladores/usuario/usuario-cadastro');
 const loginUsuario = require('./controladores/usuario/usuario-login');
 const validarLogin = require('./intermediarios/validar-login');
@@ -16,8 +17,6 @@ const listarClientes = require('./controladores/cliente/cliente-listar');
 const excluirProduto = require('./controladores/produto/produto-excluir');
 const cadastrarPedido = require('./controladores/pedido/pedido-cadastro');
 const listarPedidos = require('./controladores/pedido/pedido-listar');
-const multer = require('./multer');
-const imagemProduto = require('./controladores/produto/produto-imagem');
 
 
 
@@ -33,10 +32,9 @@ rotas.use(validarLogin);
 rotas.get('/usuario', detalharUsuario);
 rotas.put('/usuario', atualizarUsuario);
 
-rotas.post('/produto', multer.single('produto_imagem'), cadastrarProduto);
+rotas.post('/produto', multer.single('imagem'), cadastrarProduto);
 rotas.get('/produto/:id', detalharProduto);
 rotas.delete('/produto/:id', excluirProduto);
-rotas.post('/produto-imagem', imagemProduto);
 
 rotas.post('/cliente', cadastrarCliente);
 rotas.get('/cliente/:id', detalharCliente);

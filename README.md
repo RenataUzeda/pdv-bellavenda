@@ -67,11 +67,27 @@ Para configurar o projeto em ambiente local, siga estas etapas:
    ```
     PORT=
 
+    JWT_PASS=
+
     DB_HOST=
     DB_PORT=
     DB_USER=
     DB_PASS=
     DB_NAME=
+
+    EMAIL_HOST=
+    EMAIL_PORT=
+    EMAIL_USER=
+    EMAIL_PASS=
+    EMAIL_FROM=
+
+    KEY_ID=
+    KEY_NAME=
+    KEY_APP=
+
+    ENDPOINT_S3=
+    BLACKBLAZE_BUCKET=
+
    ```
 
 6. Inicie o servidor:
@@ -208,6 +224,19 @@ Exemplo de requisição
     "valor": 548,
     "categoria_id": 4
 }
+
+// opcionalmente, cadastre uma imagem para o produto
+// utilizando o formato Multipart Form, siga o modelo:
+
+    | Variável           | Tipo do Campo |
+    |--------------------|---------------|
+    | descricao          | Texto/Valor   |
+    | quantidade_estoque | Texto/Valor   |
+    | valor              | Texto/Valor   |
+    | categoria_id       | Texto/Valor   |
+    | imagem             | File          |
+
+
 ```
 
 </details>
@@ -229,6 +258,17 @@ Exemplo de requisição
     "valor": 548,
     "categoria_id": 4
 }
+
+// opcionalmente, cadastre uma imagem para o produto
+// utilizando o formato Multipart Form, siga o modelo:
+
+    | Variável           | Tipo do Campo |
+    |--------------------|---------------|
+    | descricao          | Texto/Valor   |
+    | quantidade_estoque | Texto/Valor   |
+    | valor              | Texto/Valor   |
+    | categoria_id       | Texto/Valor   |
+    | imagem             | File          |
 ```
 
 </details>

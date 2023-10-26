@@ -5,29 +5,32 @@ const endpoint = new aws.Endpoint(process.env.ENDPOINT_S3)
 const s3 = new aws.S3({
     endpoint,
     credentials: {
-    accessKeyId: process.env.KEY_ID,
-    secretAccessKey: process.env.KEY_APP
+        accessKeyId: process.env.KEY_ID,
+        secretAccessKey: process.env.KEY_APP
     }
 });
 
-const imagemProduto = async (req, res) => {
-   const { file } = req
-   try {
+const uploadImagem = async (path, buffer, mimetype) => {
+    try {
         const arquivo = await s3.upload({
             Bucket: process.env.BLACKBLAZE_BUCKET,
-            Key: file.originalname,
-            Body: file.buffer,
-            ContentType: file.mimetype
+            Key: path,
+            Body: buffer,
+            ContentType: mimetype
         }).promise()
-        return res.json(arquivo)
-   } catch (error) {
-    console.log(error)
-        return res.status(500).json({mensagem: 'Erro interno do servidor'})
-   }
+
+        return {
+            path: arquivo.Key,
+            url: `https://${process.env.BLACKBLAZE_BUCKET}.${process.env.ENDPOINT_S3}/${arquivo.Key}`
+        }
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ mensagem: 'Erro interno do servidor' })
+    }
 
 };
 
 
 
 
-module.exports = imagemProduto
+module.exports = uploadImagem

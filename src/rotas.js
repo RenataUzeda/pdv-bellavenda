@@ -33,10 +33,10 @@ rotas.use(validarLogin);
 rotas.get('/usuario', detalharUsuario);
 rotas.put('/usuario', atualizarUsuario);
 
-rotas.post('/produto', cadastrarProduto);
+rotas.post('/produto', multer.single('produto_imagem'), cadastrarProduto);
 rotas.get('/produto/:id', detalharProduto);
 rotas.delete('/produto/:id', excluirProduto);
-rotas.post('/produto-imagem', multer.single('arquivo'), imagemProduto);
+rotas.post('/produto-imagem', imagemProduto);
 
 rotas.post('/cliente', cadastrarCliente);
 rotas.get('/cliente/:id', detalharCliente);

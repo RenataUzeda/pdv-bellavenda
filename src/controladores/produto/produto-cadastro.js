@@ -5,36 +5,45 @@ const { uploadImagem } = require('./produto-imagem');
 
 const cadastrarProduto = async (req, res) => {
     const { descricao, quantidade_estoque, valor, categoria_id } = req.body;
-    const { originalname, mimetype, buffer } = req.file
- 
+    
     try {
         await verificaCampoVazio({ descricao, quantidade_estoque, valor });
-
-        await validarCategoria(categoria_id);
-
-        const [novoProduto] = await knex('produtos') .insert( {
-            descricao,
-            quantidade_estoque,
-            valor,
-            categoria_id
-        })
-        .returning(['id']);
         
-        const id = novoProduto.id;
+        await validarCategoria(categoria_id);
+        
+        let imagem;
 
-        const imagem = await uploadImagem(
-            `produtos/${id}/${originalname}`,
-            buffer,
-            mimetype
-        )
+        if(req.file){
+            const { originalname, mimetype, buffer } = req.file;
+            const [novoProduto] = await knex('produtos') .insert( {
+                descricao,
+                quantidade_estoque,
+                valor,
+                categoria_id
+            }).returning(['*']);
 
-        const [produtoComFoto] = await knex('produtos').update({
-            produto_imagem: imagem.path
-        }).where({ id }).returning(['descricao', 'quantidade_estoque', 'valor', 'categoria_id', 'produto_imagem'])
+            const id = novoProduto.id;
 
-        produtoComFoto.produto_imagem = imagem.url
+            imagem = await uploadImagem(`produtos/${id}/${originalname}`, buffer, mimetype)
+            await knex('produtos').update({produto_imagem: imagem.path}).where({ id });
+        } else {
+            await knex('produtos').insert({
+                descricao,
+                quantidade_estoque,
+                valor,
+                categoria_id
+        }).returning(['*'])
+        }
+        const [produtoComFoto] = await knex('produtos').where({ descricao }).select(['descricao', 'quantidade_estoque', 'valor', 'categoria_id', 'produto_imagem']);
+
+        if (imagem) {
+            produtoComFoto.produto_imagem = imagem.url;
+        } else {
+            delete produtoComFoto.produto_imagem;
+        }
 
         return res.status(201).json(produtoComFoto);
+    
     } catch (error) {
         if (error.code === "23505" && error.constraint === "unique_descricao") {
             return res.status(400).json({ mensagem: 'Essa descrição já existe no cadastro de produtos.' });

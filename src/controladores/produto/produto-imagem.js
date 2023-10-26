@@ -18,12 +18,10 @@ const uploadImagem = async (path, buffer, mimetype) => {
             ContentType: mimetype
         }).promise()
     
-
     return {
         path: imagem.Key,
         url: `https://${process.env.BUCKET_NAME}.${process.env.ENDPOINT_BLACKBLAZE}/${imagem.Key}`
     }
-
 }
 
 module.exports = {

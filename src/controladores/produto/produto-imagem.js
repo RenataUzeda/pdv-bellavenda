@@ -12,17 +12,16 @@ const s3 = new aws.S3({
 
 const uploadImagem = async (path, buffer, mimetype) => {
     const imagem = await s3.upload({
-        Bucket: process.env.BLACKBLAZE_BUCKET,
-        Key: path,
-        Body: buffer,
-        ContentType: mimetype
-    }).promise()
-
+            Bucket: process.env.BUCKET_NAME,
+            Key: path,
+            Body: buffer,
+            ContentType: mimetype
+        }).promise()
+    
     return {
         path: imagem.Key,
         url: `https://${process.env.BLACKBLAZE_BUCKET}.${process.env.ENDPOINT_S3}/${imagem.Key}`
     }
-
 }
 
 const excluirImagem = async (path) => {

@@ -322,6 +322,9 @@ Exemplo de requisição
 // Sem conteúdo no corpo (body) da requisição
 ```
 
+Ao deletar um produto, a imagem associada a ele também será deletada do serviço de hospedagem:
+![backblaze](./assets/backblaze.jpg)
+
 </details>
 
 <details>

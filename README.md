@@ -450,6 +450,10 @@ Exemplo de requisição
 }
 ```
 
+Ao cadastrar um novo pedido, uma mensagem de confirmação será enviada para o cliente por e-mail.
+
+![caixa de email mailtrap](./assets/email-mailtrap.jpg)
+
 </details>
 
 <details>

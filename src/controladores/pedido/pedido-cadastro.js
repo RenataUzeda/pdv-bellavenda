@@ -52,7 +52,7 @@ const cadastrarPedido = async (req, res) => {
                 pedido_id: pedido_id[0].id,
                 produto_id,
                 quantidade_produto,
-                valor_produto: valor // multiplica pela qtdd aqui tbm?
+                valor_produto: valor
             }
 
             await knex('pedido_produtos').insert(novoProdutoPedido);
@@ -69,8 +69,11 @@ const cadastrarPedido = async (req, res) => {
 
         return res.status(201).json({ message: 'Pedido cadastrado com sucesso' });
     } catch (error) {
-        console.error(error); // apagar na revisao
-        return res.status(error.statusCode || 500).json({ mensagem: error.message });
+        if (error.message.includes("Cannot destructure property") || error.message.includes("Undefined column(s)") || error.message.includes("invalid input syntax for integer")) {
+            return res.status(400).json({ mensagem: "Certifique-se de fornecer todos os dados do pedido" });
+        } 
+
+        return res.status(error.statusCode || 500).json({ mensagem: error.message });
     }
 };
 

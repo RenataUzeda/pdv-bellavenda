@@ -10,6 +10,10 @@ const cadastrarProduto = async (req, res) => {
         await verificaCampoVazio({ descricao, quantidade_estoque, valor });
         
         await validarCategoria(categoria_id);
+
+        if (quantidade_estoque < 0 || valor <= 0) {
+            throw { statusCode: 400, message: 'quantidade_estoque e valor não podem ser negativos.' };
+        };
         
         let imagem;
 

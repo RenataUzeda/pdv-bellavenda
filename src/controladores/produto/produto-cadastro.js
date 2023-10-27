@@ -19,7 +19,7 @@ const cadastrarProduto = async (req, res) => {
 
         if(req.file){
             const { originalname, mimetype, buffer } = req.file;
-            const [novoProduto] = await knex('produtos') .insert( {
+            const [novoProduto] = await knex('produtos').insert( {
                 descricao,
                 quantidade_estoque,
                 valor,
@@ -29,7 +29,7 @@ const cadastrarProduto = async (req, res) => {
             const id = novoProduto.id;
 
             imagem = await uploadImagem(`produtos/${id}/${originalname}`, buffer, mimetype)
-            await knex('produtos').update({produto_imagem: imagem.path}).where({ id });
+            await knex('produtos').update({produto_imagem: imagem.url}).where({ id });
         } else {
             await knex('produtos').insert({
                 descricao,

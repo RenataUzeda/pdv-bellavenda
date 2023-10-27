@@ -25,6 +25,19 @@ const uploadImagem = async (path, buffer, mimetype) => {
 
 }
 
+const excluirImagem = async (path) => {
+    try {
+        await s3.deleteObject({
+            Bucket: process.env.BLACKBLAZE_BUCKET,
+            Key: path
+        }).promise();
+    } catch (error) {
+        return res.status(error.statusCode || 500).json({ mensagem: error.message });
+    }
+}
+
+
 module.exports = {
-    uploadImagem
+    uploadImagem,
+    excluirImagem
 }

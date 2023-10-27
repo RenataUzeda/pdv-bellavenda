@@ -85,8 +85,8 @@ Para configurar o projeto em ambiente local, siga estas etapas:
     KEY_NAME=
     KEY_APP=
 
-    ENDPOINT_S3=
-    BLACKBLAZE_BUCKET=
+    ENDPOINT_BLACKBLAZE=
+    BUCKET_NAME=
 
    ```
 
@@ -234,7 +234,7 @@ Exemplo de requisição
     | quantidade_estoque | Texto/Valor   |
     | valor              | Texto/Valor   |
     | categoria_id       | Texto/Valor   |
-    | imagem             | File          |
+    | produto_imagem     | File          |
 
 
 ```
@@ -268,7 +268,7 @@ Exemplo de requisição
     | quantidade_estoque | Texto/Valor   |
     | valor              | Texto/Valor   |
     | categoria_id       | Texto/Valor   |
-    | imagem             | File          |
+    | produto_imagem     | File          |
 ```
 
 </details>

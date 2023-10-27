@@ -41,7 +41,7 @@ rotas.get('/cliente/:id', detalharCliente);
 rotas.get('/cliente', listarClientes);
 
 rotas.get('/produto', listarProdutos);
-rotas.put('/produto/:id', atualizarDadosProduto);
+rotas.put('/produto/:id', multer.single('produto_imagem'), atualizarDadosProduto);
 rotas.put('/cliente/:id', atualizarDadosCliente);
 
 rotas.post('/pedido', cadastrarPedido);

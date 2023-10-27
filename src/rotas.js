@@ -32,7 +32,7 @@ rotas.use(validarLogin);
 rotas.get('/usuario', detalharUsuario);
 rotas.put('/usuario', atualizarUsuario);
 
-rotas.post('/produto', multer.single('imagem'), cadastrarProduto);
+rotas.post('/produto', multer.single('produto_imagem'), cadastrarProduto);
 rotas.get('/produto/:id', detalharProduto);
 rotas.delete('/produto/:id', excluirProduto);
 
